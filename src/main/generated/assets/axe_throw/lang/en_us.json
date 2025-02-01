@@ -1,0 +1,21 @@
+{
+  "axe_throw.yacl.category.main": "Axe Throw Config (Powered by YACL)",
+  "axe_throw.yacl.category.main.tooltip": "Config",
+  "axe_throw.yacl.group.client": "Client",
+  "axe_throw.yacl.option.enum.throwingDisplayMode": "Ability to Throw - Display Mode",
+  "axe_throw.yacl.option.enum.throwingDisplayMode.always": "ALWAYS",
+  "axe_throw.yacl.option.enum.throwingDisplayMode.desc": "Controls when Amarong should log the world time when a beacon's beam segments are set for rendering.",
+  "axe_throw.yacl.option.enum.throwingDisplayMode.never": "NEVER",
+  "axe_throw.yacl.option.enum.throwingDisplayMode.shift": "ONLY WHEN HOLDING SHIFT",
+  "death.attack.axe_throw.thrown_axe_hit": "%1$s was impaled by %2$s with a thrown weapon",
+  "death.attack.axe_throw.thrown_axe_hit.item": "%1$s was impaled by %2$s with the thrown weapon %3$s",
+  "gamerule.axe_throw:projectile_damage_multiplier": "Axe Throw - Projectile Damage Multiplier",
+  "gamerule.axe_throw:projectile_drag_in_water": "Axe Throw - Projectile Drag in Water",
+  "item.axe_throw.not_throwable": "❌ Not throwable",
+  "item.axe_throw.throwable": "✅ Throwable",
+  "subtitles.axe_throw.item.thrown_axe.hit": "Thrown weapon stabs",
+  "subtitles.axe_throw.item.thrown_axe.hit_ground": "Thrown weapon vibrates",
+  "subtitles.axe_throw.item.thrown_axe.return": "Thrown weapon returns",
+  "subtitles.axe_throw.item.thrown_axe.throw": "Thrown weapon clangs",
+  "tag.item.axe_throw.throwable": "Throwable Items"
+}

@@ -1,0 +1,44 @@
+{
+	"schemaVersion": 1,
+	"id": "axe_throw",
+	"version": "${version}",
+	"name": "Axe Throw",
+	"description": "I think you've been hit by a projectile axe",
+	"authors": [
+		"Survivalblock"
+	],
+	"contact": {
+		"homepage": "https://modrinth.com/mod/axe_throw",
+		"sources": "https://github.com/ekulxam/axe_throw",
+		"issues": "https://github.com/ekulxam/axe_throw/issues"
+	},
+	"license": "MIT-0",
+	"icon": "assets/axe_throw/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+          "survivalblock.axe_throw.common.AxeThrow"
+		],
+		"client": [
+			"survivalblock.axe_throw.client.AxeThrowClient"
+		],
+		"fabric-datagen": [
+			"survivalblock.axe_throw.common.datagen.AxeThrowDataGenerator"
+		],
+		"modmenu": [
+			"survivalblock.axe_throw.common.compat.config.AxeThrowModMenuCompat"
+		]
+	},
+	"mixins": [
+		"axe_throw.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.16.10",
+		"minecraft": "~1.21.1",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}

@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "package": "survivalblock.axe_throw.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "plugin": "survivalblock.axe_throw.common.compat.AxeThrowMixinPlugin",
+  "mixins": [
+    "ItemMixin",
+    "TridentEntityMixin",
+    "TridentItemMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "client": [
+    "compat.config.client.AxeThrowClientMixin"
+  ]
+}
