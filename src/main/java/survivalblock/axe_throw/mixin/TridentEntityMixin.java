@@ -10,6 +10,7 @@ import net.minecraft.entity.damage.DamageSources;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.TridentEntity;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.world.World;
 import org.objectweb.asm.Opcodes;
@@ -49,15 +50,15 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
     @WrapOperation(method = "onEntityHit", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/damage/DamageSources;trident(Lnet/minecraft/entity/Entity;Lnet/minecraft/entity/Entity;)Lnet/minecraft/entity/damage/DamageSource;"))
     private DamageSource useThrownAxeDamageSource(DamageSources instance, Entity source, Entity attacker, Operation<DamageSource> original) {
         if ((TridentEntity) (Object) this instanceof ThrownAxeEntity) {
-            return new DamageSource(this.getWorld().getRegistryManager().get(RegistryKeys.DAMAGE_TYPE).entryOf(AxeThrowDamageTypes.THROWN_AXE), source, attacker);
+            return new DamageSource(this.getWorld().getRegistryManager().getOrThrow(RegistryKeys.DAMAGE_TYPE).getOrThrow(AxeThrowDamageTypes.THROWN_AXE), source, attacker);
         }
         return original.call(instance, source, attacker);
     }
 
     @ModifyVariable(method = "onEntityHit", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/projectile/TridentEntity;dealtDamage:Z", opcode = Opcodes.PUTFIELD), index = 3)
     private float changeAxeDamage(float value) {
-        if ((TridentEntity) (Object) this instanceof ThrownAxeEntity) {
-            return (float) (value * this.getWorld().getGameRules().get(AxeThrowGameRules.PROJECTILE_DAMAGE_MULTIPLIER).get());
+        if ((TridentEntity) (Object) this instanceof ThrownAxeEntity && this.getWorld() instanceof ServerWorld world) {
+            return (float) (value * world.getGameRules().get(AxeThrowGameRules.PROJECTILE_DAMAGE_MULTIPLIER).get());
         }
         return value;
     }

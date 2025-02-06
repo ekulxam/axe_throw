@@ -19,8 +19,8 @@ public class AxeThrowSoundEvents {
     }
 
     public static void init() {
-        Registry.register(Registries.SOUND_EVENT, ITEM_THROWN_AXE_HIT.getId(), ITEM_THROWN_AXE_HIT);
-        Registry.register(Registries.SOUND_EVENT, ITEM_THROWN_AXE_HIT_GROUND.getId(), ITEM_THROWN_AXE_HIT_GROUND);
-        Registry.register(Registries.SOUND_EVENT, ITEM_THROWN_AXE_RETURN.getId(), ITEM_THROWN_AXE_RETURN);
+        Registry.register(Registries.SOUND_EVENT, ITEM_THROWN_AXE_HIT.id(), ITEM_THROWN_AXE_HIT);
+        Registry.register(Registries.SOUND_EVENT, ITEM_THROWN_AXE_HIT_GROUND.id(), ITEM_THROWN_AXE_HIT_GROUND);
+        Registry.register(Registries.SOUND_EVENT, ITEM_THROWN_AXE_RETURN.id(), ITEM_THROWN_AXE_RETURN);
     }
 }
