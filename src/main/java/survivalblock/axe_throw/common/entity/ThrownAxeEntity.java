@@ -8,6 +8,7 @@ import net.minecraft.entity.projectile.TridentEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
@@ -101,7 +102,7 @@ public class ThrownAxeEntity extends TridentEntity {
 
     @Override
     protected float getDragInWater() {
-        return (float) this.getWorld().getGameRules().get(AxeThrowGameRules.PROJECTILE_DRAG_IN_WATER).get();
+        return (float) ((ServerWorld) this.getWorld()).getGameRules().get(AxeThrowGameRules.PROJECTILE_DRAG_IN_WATER).get();
     }
 
     @Override

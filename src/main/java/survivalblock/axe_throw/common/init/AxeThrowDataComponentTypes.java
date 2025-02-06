@@ -9,7 +9,7 @@ import survivalblock.axe_throw.common.AxeThrow;
 
 public class AxeThrowDataComponentTypes {
 
-    public static final ComponentType<Boolean> CAN_THROW = ComponentType.<Boolean>builder().codec(Codec.BOOL).packetCodec(PacketCodecs.BOOL).build();
+    public static final ComponentType<Boolean> CAN_THROW = ComponentType.<Boolean>builder().codec(Codec.BOOL).packetCodec(PacketCodecs.BOOLEAN).build();
 
     public static void init() {
         Registry.register(Registries.DATA_COMPONENT_TYPE, AxeThrow.id("can_throw"), CAN_THROW);

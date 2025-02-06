@@ -6,12 +6,12 @@ import net.minecraft.inventory.StackReference;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.consume.UseAction;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.ClickType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -26,20 +26,20 @@ import survivalblock.axe_throw.common.init.AxeThrowTags;
 public class ItemMixin {
 
 	@Inject(method = "use", at = @At("HEAD"), cancellable = true)
-	private void prepareToThrow(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir) {
+	private void prepareToThrow(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
 		if (!AxeThrow.canBeThrown(user.getStackInHand(hand))) {
 			return;
 		}
 		cir.setReturnValue(Items.TRIDENT.use(world, user, hand));
 	}
 
-	@Inject(method = "onStoppedUsing", at = @At("HEAD"), cancellable = true)
-	private void throwItem(ItemStack stack, World world, LivingEntity user, int remainingUseTicks, CallbackInfo ci) {
+	@Inject(method = "onStoppedUsing", at = @At("HEAD"))
+	private void throwItem(ItemStack stack, World world, LivingEntity user, int remainingUseTicks, CallbackInfoReturnable<Boolean> cir) {
 		if (!AxeThrow.canBeThrown(stack)) {
 			return;
 		}
 		Items.TRIDENT.onStoppedUsing(stack, world, user, remainingUseTicks);
-		ci.cancel();
+		cir.cancel();
 	}
 
 	@Inject(method = "getMaxUseTime", at = @At("HEAD"), cancellable = true)

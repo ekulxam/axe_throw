@@ -50,6 +50,6 @@ public class AxeThrowEnUsLangGenerator extends FabricLanguageProvider {
     }
 
     public static void addSoundEvent(TranslationBuilder translationBuilder, SoundEvent soundEvent, String value) {
-        translationBuilder.add(soundEvent.getId().toTranslationKey("subtitles"), value);
+        translationBuilder.add(soundEvent.id().toTranslationKey("subtitles"), value);
     }
 }
