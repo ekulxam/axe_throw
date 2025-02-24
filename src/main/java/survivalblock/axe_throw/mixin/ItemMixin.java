@@ -70,6 +70,9 @@ public class ItemMixin {
 		if (!stack.isIn(AxeThrowTags.THROWABLE)) {
 			return;
 		}
+		if (stack.isIn(AxeThrowTags.ALWAYS_THROWABLE)) {
+			return;
+		}
 		boolean canThrow = stack.getOrDefault(AxeThrowDataComponentTypes.CAN_THROW, false);
 		if (world.isClient()) {
 			player.playSound(SoundEvents.UI_BUTTON_CLICK.value(), 0.4F, canThrow ? 0.75F : 1.0F);

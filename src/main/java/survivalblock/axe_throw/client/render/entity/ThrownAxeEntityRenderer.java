@@ -14,6 +14,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.RotationAxis;
 import survivalblock.axe_throw.common.entity.ThrownAxeEntity;
 import survivalblock.axe_throw.common.init.AxeThrowAttachments;
+import survivalblock.axe_throw.common.init.AxeThrowTags;
 
 public class ThrownAxeEntityRenderer extends EntityRenderer<ThrownAxeEntity> {
 
@@ -27,11 +28,12 @@ public class ThrownAxeEntityRenderer extends EntityRenderer<ThrownAxeEntity> {
     public void render(ThrownAxeEntity axe, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
         matrices.push();
         matrices.multiply(RotationAxis.NEGATIVE_Y.rotationDegrees(90.0F - yaw));
-        matrices.multiply(RotationAxis.NEGATIVE_Z.rotationDegrees(axe.getTicksActive() * 15));
         //noinspection UnstableApiUsage
         ItemStack stack = axe.getAttachedOrElse(AxeThrowAttachments.THROWN_AXE_ITEM_STACK, axe.getItemStack()).copy();
-        if (axe.isEnchanted()) {
-            stack.set(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true);
+        if (stack.isIn(AxeThrowTags.KNIVES)) {
+            matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(axe.getPitch() - 135));
+        } else {
+            matrices.multiply(RotationAxis.NEGATIVE_Z.rotationDegrees(axe.getTicksActive() * 15));
         }
         MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformationMode.FIXED, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, axe.getWorld(), 0);
         matrices.pop();

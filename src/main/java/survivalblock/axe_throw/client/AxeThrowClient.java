@@ -29,7 +29,7 @@ public class AxeThrowClient implements ClientModInitializer {
             return;
         }
         MutableText text;
-        if (stack.getOrDefault(AxeThrowDataComponentTypes.CAN_THROW, false)) {
+        if (stack.getOrDefault(AxeThrowDataComponentTypes.CAN_THROW, false) || stack.isIn(AxeThrowTags.ALWAYS_THROWABLE)) {
             text = Text.translatable("item.axe_throw.throwable").formatted(Formatting.GREEN);
         } else {
             text = Text.translatable("item.axe_throw.not_throwable").formatted(Formatting.RED);

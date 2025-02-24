@@ -24,6 +24,8 @@ public class AxeThrowEnUsLangGenerator extends FabricLanguageProvider {
 
         // item tags
         translationBuilder.add(AxeThrowTags.THROWABLE, "Throwable Items");
+        translationBuilder.add(AxeThrowTags.KNIVES, "Knives");
+        translationBuilder.add(AxeThrowTags.ALWAYS_THROWABLE, "Always Throwable");
 
         // damage types
         translationBuilder.add("death.attack.axe_throw.thrown_axe_hit", "%1$s was impaled by %2$s with a thrown weapon");

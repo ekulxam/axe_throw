@@ -1,0 +1,10 @@
+{
+  "values": [
+    "minecraft:diamond_sword",
+    "minecraft:netherite_sword",
+    {
+      "id": "minecraft:golden_sword",
+      "required": false
+    }
+  ]
+}
