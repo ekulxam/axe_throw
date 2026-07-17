@@ -118,7 +118,7 @@ public abstract class ItemMixin {
                             pos.x,
                             pos.y,
                             pos.z,
-                            1,
+                            0.4F,
                             1,
                             user.getRandom().nextLong()
                     )
