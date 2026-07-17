@@ -81,5 +81,11 @@
       "item/trident/throw2"
     ],
     "subtitle": "subtitles.axe_throw.item.thrown_axe.throw"
+  },
+  "item.thrown_axe.charged": {
+    "sounds": [
+      "entity.experience_orb.pickup"
+    ],
+    "subtitle": "subtitles.axe_throw.item.thrown_axe.charged"
   }
 }

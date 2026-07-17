@@ -2,6 +2,7 @@ package survivalblock.axe_throw.common.entity;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.projectile.TridentEntity;
@@ -9,9 +10,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import survivalblock.axe_throw.common.AxeThrow;
+import survivalblock.axe_throw.common.init.AxeThrowAttachments;
 import survivalblock.axe_throw.common.init.AxeThrowGameRules;
 import survivalblock.axe_throw.common.init.AxeThrowSoundEvents;
 
@@ -25,6 +28,8 @@ public class ThrownAxeEntity extends TridentEntity {
 
     public static final Supplier<ItemStack> DEFAULT_ITEM_STACK_SUPPLIER = () -> new ItemStack(Items.DIAMOND_AXE);
     public static final String SLOT_KEY = "shotFromInventorySlot";
+
+    private static final double GRAVITY_MULTIPLIER = (0.05 - 0.01) / (1.1 - 4);
 
     private int slot = 0;
 
@@ -107,5 +112,14 @@ public class ThrownAxeEntity extends TridentEntity {
     @Override
     protected SoundEvent getHitSound() {
         return AxeThrowSoundEvents.ITEM_THROWN_AXE_HIT_GROUND;
+    }
+
+    @Override
+    protected double getGravity() {
+        return MathHelper.clamp(
+                GRAVITY_MULTIPLIER * (AxeThrow.getAttributeValue(this.getOwner(), this.getAttachedOrElse(AxeThrowAttachments.THROWN_AXE_ITEM_STACK, this.getItemStack()), EntityAttributes.GENERIC_ATTACK_SPEED) - 4) + 0.01,
+                0.005,
+                0.5
+        );
     }
 }

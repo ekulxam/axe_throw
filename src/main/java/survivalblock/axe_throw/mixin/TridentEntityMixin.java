@@ -3,16 +3,19 @@ package survivalblock.axe_throw.mixin;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.attribute.DefaultAttributeRegistry;
+import net.minecraft.entity.attribute.EntityAttribute;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageSources;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.TridentEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.world.World;
 import org.objectweb.asm.Opcodes;
@@ -29,7 +32,6 @@ import survivalblock.axe_throw.common.init.AxeThrowSoundEvents;
 
 @Mixin(TridentEntity.class)
 public abstract class TridentEntityMixin extends PersistentProjectileEntity {
-
     protected TridentEntityMixin(EntityType<? extends PersistentProjectileEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -58,12 +60,12 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
         return original.call(instance, source, attacker);
     }
 
+    @SuppressWarnings("UnstableApiUsage")
     @ModifyVariable(method = "onEntityHit", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/projectile/TridentEntity;dealtDamage:Z", opcode = Opcodes.PUTFIELD), index = 3)
     private float changeAxeDamage(float value) {
         if ((TridentEntity) (Object) this instanceof ThrownAxeEntity thrownAxe) {
             ItemStack axe = thrownAxe.getAttachedOrElse(AxeThrowAttachments.THROWN_AXE_ITEM_STACK, ThrownAxeEntity.DEFAULT_ITEM_STACK_SUPPLIER.get());
-            axe.getOrDefault(DataComponentTypes.ATTRIBUTE_MODIFIERS, AttributeModifiersComponent.DEFAULT).modifiers();
-            return (float) (value * this.getWorld().getGameRules().get(AxeThrowGameRules.PROJECTILE_DAMAGE_MULTIPLIER).get());
+            return (float) (AxeThrow.getAttributeValue(this.getOwner(), axe, EntityAttributes.GENERIC_ATTACK_DAMAGE) * this.getWorld().getGameRules().get(AxeThrowGameRules.PROJECTILE_DAMAGE_MULTIPLIER).get());
         }
         return value;
     }

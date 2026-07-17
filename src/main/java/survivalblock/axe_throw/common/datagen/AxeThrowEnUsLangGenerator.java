@@ -36,6 +36,7 @@ public class AxeThrowEnUsLangGenerator extends FabricLanguageProvider {
         addSoundEvent(translationBuilder, AxeThrowSoundEvents.ITEM_THROWN_AXE_HIT_GROUND, "Thrown weapon vibrates");
         addSoundEvent(translationBuilder, AxeThrowSoundEvents.ITEM_THROWN_AXE_RETURN, "Thrown weapon returns");
         addSoundEvent(translationBuilder, AxeThrowSoundEvents.ITEM_THROWN_AXE_THROW.value(), "Thrown weapon clangs");
+        addSoundEvent(translationBuilder, AxeThrowSoundEvents.ITEM_THROWN_AXE_CHARGED.value(), "Thrown weapon charges");
 
         // config
         translationBuilder.add("axe_throw.yacl.category.main", "Axe Throw Config (Powered by YACL)");
@@ -49,6 +50,7 @@ public class AxeThrowEnUsLangGenerator extends FabricLanguageProvider {
 
         translationBuilder.add(AxeThrowGameRules.PROJECTILE_DAMAGE_MULTIPLIER.getTranslationKey(), "Axe Throw - Projectile Damage Multiplier");
         translationBuilder.add(AxeThrowGameRules.PROJECTILE_DRAG_IN_WATER.getTranslationKey(), "Axe Throw - Projectile Drag in Water");
+        translationBuilder.add(AxeThrowGameRules.NOTIFY_WHEN_READY.getTranslationKey(), "Axe Throw - Notify (Sound) When Ready to Throw");
     }
 
     public static void addSoundEvent(TranslationBuilder translationBuilder, SoundEvent soundEvent, String value) {

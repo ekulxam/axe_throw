@@ -13,6 +13,9 @@ public class AxeThrowGameRules {
     public static final GameRules.Key<DoubleRule> PROJECTILE_DAMAGE_MULTIPLIER =
             GameRuleRegistry.register("axe_throw:projectile_damage_multiplier", GameRules.Category.MISC, GameRuleFactory.createDoubleRule(0.7F, 0.01F, Float.MAX_VALUE));
 
+    public static final GameRules.Key<GameRules.BooleanRule> NOTIFY_WHEN_READY =
+            GameRuleRegistry.register("axe_throw:notify_when_throw_ready", GameRules.Category.MISC, GameRuleFactory.createBooleanRule(true));
+
     public static void init() {
 
     }

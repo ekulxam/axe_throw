@@ -1,10 +1,12 @@
 package survivalblock.axe_throw.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.component.ComponentType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.projectile.TridentEntity;
@@ -49,5 +51,13 @@ public class TridentItemMixin {
             return original.call(stack, componentType);
         }
         return Optional.ofNullable(AxeThrowSoundEvents.ITEM_THROWN_AXE_THROW);
+    }
+
+    @ModifyExpressionValue(method = "onStoppedUsing", at = @At(value = "CONSTANT", args = "intValue=10"))
+    private int modifyBasedOnAttackSpeed(int original, @Local(argsOnly = true) ItemStack stack, @Local(argsOnly = true) LivingEntity user) {
+        if (!AxeThrow.canBeThrown(stack)) {
+            return original;
+        }
+        return (int) (10 * 1.1 / AxeThrow.getAttributeValue(user, stack, EntityAttributes.GENERIC_ATTACK_SPEED));
     }
 }

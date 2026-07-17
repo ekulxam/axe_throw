@@ -7,8 +7,8 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.model.json.ModelTransformationMode;
+import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.RotationAxis;
@@ -17,9 +17,6 @@ import survivalblock.axe_throw.common.init.AxeThrowAttachments;
 import survivalblock.axe_throw.common.init.AxeThrowTags;
 
 public class ThrownAxeEntityRenderer extends EntityRenderer<ThrownAxeEntity> {
-
-    private static final Identifier TEXTURE = Identifier.ofVanilla("textures/item/diamond_axe.png");
-
     public ThrownAxeEntityRenderer(EntityRendererFactory.Context ctx) {
         super(ctx);
     }
@@ -42,7 +39,7 @@ public class ThrownAxeEntityRenderer extends EntityRenderer<ThrownAxeEntity> {
 
     @Override
     public Identifier getTexture(ThrownAxeEntity entity) {
-        return TEXTURE;
+        return SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE;
     }
 
     @Override

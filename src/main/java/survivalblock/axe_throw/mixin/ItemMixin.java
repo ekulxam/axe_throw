@@ -1,31 +1,42 @@
 package survivalblock.axe_throw.mixin;
 
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.StackReference;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket;
 import net.minecraft.screen.slot.Slot;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ClickType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import survivalblock.axe_throw.common.AxeThrow;
 import survivalblock.axe_throw.common.init.AxeThrowDataComponentTypes;
+import survivalblock.axe_throw.common.init.AxeThrowGameRules;
+import survivalblock.axe_throw.common.init.AxeThrowSoundEvents;
 import survivalblock.axe_throw.common.init.AxeThrowTags;
 
 @Mixin(Item.class)
-public class ItemMixin {
+public abstract class ItemMixin {
 
-	@Inject(method = "use", at = @At("HEAD"), cancellable = true)
+    @Shadow
+    public abstract int getMaxUseTime(ItemStack stack, LivingEntity user);
+
+    @Inject(method = "use", at = @At("HEAD"), cancellable = true)
 	private void prepareToThrow(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir) {
 		if (!AxeThrow.canBeThrown(user.getStackInHand(hand))) {
 			return;
@@ -84,4 +95,34 @@ public class ItemMixin {
 		}
 		cir.setReturnValue(true);
 	}
+
+    @Inject(method = "usageTick", at = @At("HEAD"))
+    private void playSoundIfReady(World world, LivingEntity user, ItemStack stack, int remainingUseTicks, CallbackInfo ci) {
+        if (!(user instanceof ServerPlayerEntity player)) {
+            return;
+        }
+        if (!AxeThrow.canBeThrown(stack)) {
+            return;
+        }
+        if (!world.getGameRules().getBoolean(AxeThrowGameRules.NOTIFY_WHEN_READY)) {
+            return;
+        }
+        int threshold = (int) (10 * 1.1 / AxeThrow.getAttributeValue(user, stack, EntityAttributes.GENERIC_ATTACK_SPEED));
+        int i = this.getMaxUseTime(stack, user) - remainingUseTicks;
+        if (i == threshold) {
+            Vec3d pos = player.getPos();
+            player.networkHandler.sendPacket(
+                    new PlaySoundS2CPacket(
+                            AxeThrowSoundEvents.ITEM_THROWN_AXE_CHARGED,
+                            SoundCategory.PLAYERS,
+                            pos.x,
+                            pos.y,
+                            pos.z,
+                            1,
+                            1,
+                            user.getRandom().nextLong()
+                    )
+            );
+        }
+    }
 }
