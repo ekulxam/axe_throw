@@ -17,5 +17,7 @@
   "subtitles.axe_throw.item.thrown_axe.hit_ground": "Thrown weapon vibrates",
   "subtitles.axe_throw.item.thrown_axe.return": "Thrown weapon returns",
   "subtitles.axe_throw.item.thrown_axe.throw": "Thrown weapon clangs",
+  "tag.item.axe_throw.always_throwable": "Always Throwable",
+  "tag.item.axe_throw.knives": "Knives",
   "tag.item.axe_throw.throwable": "Throwable Items"
 }

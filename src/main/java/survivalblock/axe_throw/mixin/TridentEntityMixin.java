@@ -3,12 +3,15 @@ package survivalblock.axe_throw.mixin;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageSources;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.TridentEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.world.World;
@@ -18,6 +21,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import survivalblock.axe_throw.common.AxeThrow;
 import survivalblock.axe_throw.common.entity.ThrownAxeEntity;
+import survivalblock.axe_throw.common.init.AxeThrowAttachments;
 import survivalblock.axe_throw.common.init.AxeThrowDamageTypes;
 import survivalblock.axe_throw.common.init.AxeThrowEntityTypes;
 import survivalblock.axe_throw.common.init.AxeThrowGameRules;
@@ -56,7 +60,9 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
 
     @ModifyVariable(method = "onEntityHit", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/projectile/TridentEntity;dealtDamage:Z", opcode = Opcodes.PUTFIELD), index = 3)
     private float changeAxeDamage(float value) {
-        if ((TridentEntity) (Object) this instanceof ThrownAxeEntity) {
+        if ((TridentEntity) (Object) this instanceof ThrownAxeEntity thrownAxe) {
+            ItemStack axe = thrownAxe.getAttachedOrElse(AxeThrowAttachments.THROWN_AXE_ITEM_STACK, ThrownAxeEntity.DEFAULT_ITEM_STACK_SUPPLIER.get());
+            axe.getOrDefault(DataComponentTypes.ATTRIBUTE_MODIFIERS, AttributeModifiersComponent.DEFAULT).modifiers();
             return (float) (value * this.getWorld().getGameRules().get(AxeThrowGameRules.PROJECTILE_DAMAGE_MULTIPLIER).get());
         }
         return value;

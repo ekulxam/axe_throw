@@ -1,2 +1,2 @@
-Axe Throw 1.0.1
-- Added the `axe_throw:knives` and `axe_throw:always_throwable` tags
+Axe Throw 1.0.2
+- Fix `axe_throw:always_throwable` items not being throwable

@@ -50,6 +50,8 @@ public class AxeThrow implements ModInitializer {
 
 	@SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public static boolean canBeThrown(ItemStack stack) {
-		return stack.isIn(AxeThrowTags.THROWABLE) && stack.getOrDefault(AxeThrowDataComponentTypes.CAN_THROW, false);
+		return stack.isIn(AxeThrowTags.ALWAYS_THROWABLE) ||
+				(stack.isIn(AxeThrowTags.THROWABLE)
+						&& stack.getOrDefault(AxeThrowDataComponentTypes.CAN_THROW, false));
 	}
 }
