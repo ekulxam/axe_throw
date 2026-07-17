@@ -84,7 +84,7 @@
   },
   "item.thrown_axe.charged": {
     "sounds": [
-      "entity.experience_orb.pickup"
+      "random/orb"
     ],
     "subtitle": "subtitles.axe_throw.item.thrown_axe.charged"
   }
